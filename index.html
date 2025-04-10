@@ -1,102 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wild Drop - Tech Accessories</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f5f5f5;
-    }
-    header {
-      background-color: #111;
-      color: white;
-      padding: 1em;
-      text-align: center;
-      font-size: 1.5em;
-    }
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 1em;
-      gap: 20px;
-    }
-    .product-card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 250px;
-      padding: 1em;
-      text-align: center;
-    }
-    .product-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .product-title {
-      font-size: 1.2em;
-      margin: 0.5em 0;
-    }
-    .product-price {
-      color: green;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-    .whatsapp-button {
-      background-color: #25d366;
-      color: white;
-      padding: 10px;
-      text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-    }
-  </style>
-</head>
-<body>
+import { useState } from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button"; import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-  <header>Wild Drop - Tech Accessories</header>
+const products = { smartphones: [ { name: "iPhone 13", price: "₹58,000", images: [ "https://m.media-amazon.com/images/I/71gm8v4uPBL.AC_SL1500.jpg", "https://m.media-amazon.com/images/I/71fVoqRC0wL.AC_SL1500.jpg" ] }, { name: "Samsung Galaxy M14", price: "₹13,999", images: [ "https://m.media-amazon.com/images/I/81ZSn2rk9WL.AC_SL1500.jpg", "https://m.media-amazon.com/images/I/81+8ygkH5vL.AC_SL1500.jpg" ] } ], accessories: [ { name: "USB-C Fast Charger", price: "₹699", images: [ "https://m.media-amazon.com/images/I/61vN1oszVlL.AC_SL1500.jpg", "https://m.media-amazon.com/images/I/71fK8FodBoL.AC_SL1500.jpg" ] }, { name: "Phone Tripod", price: "₹599", images: [ "https://m.media-amazon.com/images/I/61KzXogcbPL.AC_SL1500.jpg", "https://m.media-amazon.com/images/I/71B1N2ZyQUL.AC_SL1500.jpg" ] } ], };
 
-  <div class="products">
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/61BGE6iu4AL._AC_SL1500_.jpg" alt="Smart Watch">
-      <div class="product-title">Smart Watch</div>
-      <div class="product-price">₹2,499</div>
-      <a class="whatsapp-button" href="https://wa.me/917510967182?text=I%20want%20to%20order%20the%20Smart%20Watch">Order on WhatsApp</a>
+export default function WildDrop() { const [selectedTab, setSelectedTab] = useState("smartphones");
+
+return ( <div className="p-4"> <h1 className="text-3xl font-bold text-center mb-4">Wild Drop - Tech Accessories</h1>
+
+<Tabs value={selectedTab} onValueChange={setSelectedTab} className="mb-6">
+    <TabsList className="flex justify-center gap-4">
+      <TabsTrigger value="smartphones">Smartphones</TabsTrigger>
+      <TabsTrigger value="accessories">Accessories</TabsTrigger>
+    </TabsList>
+  </Tabs>
+
+  <TabsContent value={selectedTab}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {products[selectedTab].map((product, index) => (
+        <Card key={index} className="rounded-2xl shadow-md">
+          <CardContent className="p-4">
+            <div className="flex gap-2 overflow-x-auto mb-2">
+              {product.images.map((src, i) => (
+                <img key={i} src={src} alt={product.name} className="w-32 h-32 object-cover rounded-lg" />
+              ))}
+            </div>
+            <h2 className="text-xl font-semibold mb-1">{product.name}</h2>
+            <p className="text-green-600 font-bold mb-2">{product.price}</p>
+            <Button className="bg-green-500 hover:bg-green-600 text-white" asChild>
+              <a
+                href={`https://wa.me/917510967182?text=I want to order ${product.name}`}
+                target="_blank"
+              >
+                Order on WhatsApp
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
     </div>
+  </TabsContent>
+</div>
 
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/51HBom8xz7L._AC_SL1200_.jpg" alt="Wireless Earbuds">
-      <div class="product-title">Wireless Earbuds</div>
-      <div class="product-price">₹1,799</div>
-      <a class="whatsapp-button" href="https://wa.me/917510967182?text=I%20want%20to%20order%20Wireless%20Earbuds">Order on WhatsApp</a>
-    </div>
+); }
 
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/71kX8GgGZ4L._AC_SL1500_.jpg" alt="Bluetooth Speaker">
-      <div class="product-title">Bluetooth Speaker</div>
-      <div class="product-price">₹1,299</div>
-      <a class="whatsapp-button" href="https://wa.me/917510967182?text=I%20want%20to%20order%20the%20Bluetooth%20Speaker">Order on WhatsApp</a>
-    </div>
-
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/61KzXogcbPL._AC_SL1500_.jpg" alt="Phone Tripod">
-      <div class="product-title">Phone Tripod Stand</div>
-      <div class="product-price">₹599</div>
-      <a class="whatsapp-button" href="https://wa.me/917510967182?text=I%20want%20to%20order%20the%20Phone%20Tripod">Order on WhatsApp</a>
-    </div>
-
-    <div class="product-card">
-      <img src="https://m.media-amazon.com/images/I/61vN1oszVlL._AC_SL1500_.jpg" alt="USB-C Charger">
-      <div class="product-title">USB-C Fast Charger</div>
-      <div class="product-price">₹699</div>
-      <a class="whatsapp-button" href="https://wa.me/917510967182?text=I%20want%20to%20order%20the%20USB-C%20Fast%20Charger">Order on WhatsApp</a>
-    </div>
-  </div>
-
-</body>
-</html>
